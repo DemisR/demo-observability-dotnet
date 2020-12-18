@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+############################## Metrics ##############################
+  prometheus:
+    image: prom/prometheus:v2.23.0
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+  
+  grafana:
+    image: grafana/grafana:7.3.6
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/:/etc/grafana
+
+######################################################################
+############################## Tracing ###############################
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+
+######################################################################
+############################### Logs #################################
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+######################################################################
+############################### App ##################################
+  dotnetservice:
+    build: ./dotnetservice
+    ports:
+      - "5000:80"
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://localhost:3100/loki/api/v1/push"
+
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: dotnetuser
+      POSTGRES_PASSWORD: dotnetpass
+      POSTGRES_DB: dotnetdb
+    volumes:
+       - postgres_data:/data/postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+  postgres_data: {}

@@ -1,0 +1,27 @@
+apiVersion: 1
+
+datasources:
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  url: http://prometheus:9090
+  isDefault: true
+  editable: false
+- name: Zipkin
+  type: zipkin
+  url: http://zipkin:9411
+  isDefault: false
+  editable: false
+  uid: Zipkin
+- name: Loki
+  type: loki
+  url: http://loki:3100
+  isDefault: false
+  editable: false
+  jsonData:
+    maxLines: 1000
+    derivedFields:
+      - datasourceUid: Zipkin
+        matcherRegex: "\\[.*,(\\w+),.*,.*\\]"
+        name: TraceID
+        url: "$${__value.raw}"
