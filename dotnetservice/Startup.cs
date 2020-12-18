@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Steeltoe.Connector.PostgreSql;
-using Steeltoe.Management.Endpoint;
 using Steeltoe.Management.Tracing;
 
 namespace dotnetservice
@@ -21,12 +20,9 @@ namespace dotnetservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAllActuators(Configuration);
             services.AddPostgresConnection(Configuration);
             services.AddControllers();
-            // Add Distributed tracing
-            services.AddDistributedTracing(Configuration,
-                builder => builder.UseZipkinWithTraceOptions(services));
+            services.AddDistributedTracing(Configuration, builder => builder.UseZipkinWithTraceOptions(services));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +37,6 @@ namespace dotnetservice
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapAllActuators();
             });
         }
     }
