@@ -64,6 +64,15 @@ services:
     ports:
       - "5432:5432"
 
+  react:
+    build: ./react
+    restart: always
+    ports:
+     - "3005:3005" # React app will be served on localhost:3005
+    environment:
+     PORT: 3005
+
+
 volumes:
   prometheus_data: {}
   grafana_data: {}

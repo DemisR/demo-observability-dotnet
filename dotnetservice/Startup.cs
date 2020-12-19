@@ -21,8 +21,10 @@ namespace dotnetservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPostgresConnection(Configuration);
-            services.AddControllers();
+            services.AddCors();
             services.AddDistributedTracing(Configuration, builder => builder.UseZipkinWithTraceOptions(services));
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,10 +36,20 @@ namespace dotnetservice
             }
 
             app.UseRouting();
+            
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }

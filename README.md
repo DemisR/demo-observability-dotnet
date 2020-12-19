@@ -2,6 +2,13 @@
 
 `docker-compose up -d --build`
 
+
+For build and run reac without docker :
+```
+cd react/ 
+npm run deploy
+```
+
 # URLs:
 
 dotnetservice :
@@ -14,6 +21,8 @@ dotnetservice :
 Prometheus : http://localhost:9090
 Grafana : http://localhost:3000 (user: admin / pass: secret) 
 Zipkin: http://localhost:9411/zipkin/?serviceName=dotnetservice
+Sentry: https://sentry.io/organizations/demo-lm/issues/?project=5563890
+React : http://localhost:3005
 
 # Setup
 
@@ -50,3 +59,13 @@ docker plugin rm loki
 ```
 while true; do sleep 1; curl http://localhost:5000/api/values; done
 ```
+
+
+Got to react front 
+select item add to cart and checkout
+...Something went wrong
+but how found the problem ?
+
+Go to sentry ent check the problem
+Got to grafana and check errors 500 with loki `{compose_service="dotnetservice"} |~ "500"`
+Click on the log and open the trace

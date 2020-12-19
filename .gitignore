@@ -19,7 +19,7 @@ dotnetservice/nupkg/
 
 # Build results
 dotnetservice/[Dd]ebug/
-[dotnetservice/Dd]ebugPublic/
+dotnetservice/[Dd]ebugPublic/
 dotnetservice/[Rr]elease/
 dotnetservice/[Rr]eleases/
 dotnetservice/x64/
@@ -32,3 +32,14 @@ dotnetservice/[Oo]ut/
 msbuild.log
 msbuild.err
 msbuild.wrn
+
+
+
+
+react/node_modules/*
+react/build/
+.idea/
+.DS_Store
+react/settings.json
+.vscode/
+.env

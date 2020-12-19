@@ -6,12 +6,17 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using System.Data;
+using System.Threading;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+
 namespace dotnetservice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        Random rnd = new Random();
         private readonly NpgsqlConnection _dbConnection;
         public ValuesController([FromServices] NpgsqlConnection dbConnection)
         {
@@ -32,6 +37,11 @@ namespace dotnetservice.Controllers
                 string tablename = (string)row[2];
                 tables.Add(tablename);
             }
+
+            // Add random sleep
+            int sleepWaitMilliSeconds = rnd.Next(100, 200);
+            Thread.Sleep(sleepWaitMilliSeconds);
+
             return tables;
         }
         // GET api/values/5
@@ -43,9 +53,20 @@ namespace dotnetservice.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<string> Post([FromBody] JsonElement value)
         {
-
+            string json = System.Text.Json.JsonSerializer.Serialize(value);
+            // Add random sleep
+            int sleepWaitMilliSeconds = rnd.Next(100, 200);
+            Thread.Sleep(sleepWaitMilliSeconds);
+            if (sleepWaitMilliSeconds > 150 )
+            {
+             return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+            else
+            {
+                return Ok(value);
+            }
         }
 
         // PUT api/values/5
