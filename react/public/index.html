@@ -24,8 +24,7 @@
 
   <!-- Import SDK -->
   <script
-    src="https://browser.sentry-cdn.com/5.15.5/bundle.min.js"
-    integrity="sha384-wF7Jc4ZlWVxe/L8Ji3hOIBeTgo/HwFuaeEfjGmS3EXAG7Y+7Kjjr91gJpJtr+PAT"
+    src="https://browser.sentry-cdn.com/5.29.2/bundle.min.js"
     crossorigin="anonymous">
   </script>
 
@@ -35,10 +34,10 @@
       release: "%REACT_APP_RELEASE%",
       environment: "%REACT_APP_ENVIRONMENT%",
       beforeSend(event) {
-        // Check if it is an exception, if so, show the report dialog
-        if (event.exception) {
-          Sentry.showReportDialog();
-        }
+        // Check if it is an exception, if so, show the SENTRY report dialog
+        // if (event.exception) {
+        //   Sentry.showReportDialog();
+        // }
         return event;
       }
     });
