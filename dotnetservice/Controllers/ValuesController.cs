@@ -9,6 +9,7 @@ using System.Data;
 using System.Threading;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 
 namespace dotnetservice.Controllers
 {
@@ -56,17 +57,31 @@ namespace dotnetservice.Controllers
         public ActionResult<string> Post([FromBody] JsonElement value)
         {
             string json = System.Text.Json.JsonSerializer.Serialize(value);
-            // Add random sleep
-            int sleepWaitMilliSeconds = rnd.Next(100, 200);
-            Thread.Sleep(sleepWaitMilliSeconds);
-            if (sleepWaitMilliSeconds > 150 )
+
+            // call an external service
+            string baseUrl = "https://httpbin.org/status/200";
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(baseUrl);
+            HttpResponseMessage response = client.GetAsync(baseUrl).Result; 
+            if (response.IsSuccessStatusCode)
             {
-             return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                int sleepWaitMilliSeconds = rnd.Next(100, 200);
+                // slowdown and sometimes return error
+                if (sleepWaitMilliSeconds > 150 )
+                {
+                    return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                }
+                else
+                {
+                    Thread.Sleep(sleepWaitMilliSeconds); // simulate long process
+                    return Ok(value);
+                }
             }
             else
             {
-                return Ok(value);
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
+            client.Dispose();
         }
 
         // PUT api/values/5
