@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 
 import "./App.css";
-import wrenchImg from "../assets/wrench.png";
-import nailsImg from "../assets/nails.png";
-import hammerImg from "../assets/hammer.png";
+import sfImg from "../assets/49ers.png";
+import patriotsImg from "../assets/patriots.jpg";
+import seahawksImg from "../assets/seahawks.jpg";
 import * as actions from '../store/actions/index';
 
 const BACKEND = `http://localhost:5000` // `http://localhost:5000`
@@ -33,22 +33,22 @@ class App extends Component {
 
     this.store = [
       {
-        id: "wrench",
-        name: "Wrench",
-        price: 500,
-        img: wrenchImg
+        id: "sf",
+        name: "49er",
+        price: 100,
+        img: sfImg
       },
       {
-        id: "nails",
-        name: "Nails",
-        price: 25,
-        img: nailsImg
+        id: "patriots",
+        name: "patriots",
+        price: 100,
+        img: patriotsImg
       },
       {
-        id: "hammer",
-        name: "Hammer",
-        price: 1000,
-        img: hammerImg
+        id: "seahawks",
+        name: "seahawks",
+        price: 100,
+        img: seahawksImg
       }
     ];
 
@@ -148,7 +148,7 @@ class App extends Component {
       <div className="App">
         <main>
           <header>
-            <h1>Online Hardware Store</h1>
+            <h1>American Football</h1>
           </header>
 
           <div className="inventory">
@@ -162,7 +162,7 @@ class App extends Component {
                   <p>{name}</p>
                   <div className="button-wrapper">
                     <strong>${monify(price)}</strong>
-                    <button onClick={() => this.props.onBuyItem(item)}>Buy!</button>
+                    <button onClick={() => this.props.onBuyItem(item)}>Bet</button>
                   </div>
                 </div>
               );
@@ -201,24 +201,24 @@ class App extends Component {
                 </div>
               </div>
             ) : (
-              "Your cart is empty"
+              "No bets"
             )}
           </div>
           {this.state.hasError && (
             <p className="cart-error">Something went wrong</p>
           )}
           {this.state.success && (
-            <p className="cart-success">Thank you for your purchase!</p>
+            <p className="cart-success">Bets placed. Thank you!</p>
           )}
           <button
             onClick={this.checkout}
             disabled={this.props.cart.length === 0}
           >
-            Checkout
+            Place bets
           </button>{" "}
           {this.props.cart.length > 0 && (
             <button onClick={this.props.onResetCart} className="cart-reset">
-              Empty cart
+              Reset bets
             </button>
           )}
         </div>
