@@ -80,6 +80,24 @@ They only know that "sometimes" doesn't work.
 They start from [Sentry](https://sentry.io/organizations/demo-lm/issues/?project=5563890) and found the user issue.
 They found an error when the user bet and the betting system respond to the call with an error code 500.
 
+Ok, maybe we can start checking if the services are up. (the monitoring system should do it, but we can grab some informations)
+- http://localhost:5000/actuator/health
+- http://localhost:8080/actuator/health
+
+We can check metrics : http://localhost:3000/d/Sleb_VEiz/jvm-micrometer?orgId=1&refresh=30s&from=now-5m&to=now
+
 Now look in the logs with [Loki](http://localhost:3000/explore?orgId=1&left=%5B%22now-15m%22,%22now%22,%22Loki%22,%7B%22expr%22:%22%7Bcompose_service%3D%5C%22dotnetservice%5C%22%7D%20%7C~%20%5C%22500%5C%22%22%7D%5D)
 and serach code 500 : `{compose_service="dotnetservice"} |~ "500"`
-Click on the log and open the trace
+Click on the log and open the trace (bug : wrong order of span. Open trace in [Zipkin interface](http://localhost:9411/zipkin))
+
+You can also search ol logs based on trace id `{compose_project="demo-observability-dotnet"} |~ "a9e4f7df437b094f"`
+
+# To fix
+
+dotnetservice:
+- add errors logs when receive stauts code 500
+- http metrics not exported when we enable tracing
+
+tracing:
+- wrong order of span displayed by grafana. Search if it's a Grafana bug or other.
+

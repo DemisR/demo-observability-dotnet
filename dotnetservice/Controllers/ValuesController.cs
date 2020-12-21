@@ -59,7 +59,7 @@ namespace dotnetservice.Controllers
             string json = System.Text.Json.JsonSerializer.Serialize(value);
 
             // call an springboot service
-            string baseUrl = "http://springbootservice/api/bets";
+            string baseUrl = "http://springbootservice:8080/api/chaining";
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(baseUrl);
             HttpResponseMessage response = client.GetAsync(baseUrl).Result; 

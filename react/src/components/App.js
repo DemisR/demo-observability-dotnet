@@ -52,7 +52,7 @@ class App extends Component {
       }
     ];
 
-    this.checkout = this.checkout.bind(this);
+    this.placebets = this.placebets.bind(this);
 
     // generate unique sessionId and set as Sentry tag
     this.sessionId = getUniqueId();
@@ -88,10 +88,10 @@ class App extends Component {
       .then(json => console.log(json));
   }
 
-  checkout() {
+  placebets() {
     Sentry.addBreadcrumb({
       category: 'cart',
-      message: 'User clicked on Checkout',
+      message: 'User clicked on placebets',
       level: 'info'
     });
 
@@ -100,7 +100,7 @@ class App extends Component {
     }
 
     /*
-      POST request to /checkout endpoint.
+      POST request to /placebets endpoint.
         - Custom header with transactionId for transaction tracing
         - throw error if response !== 200
     */
@@ -116,7 +116,6 @@ class App extends Component {
     });
     // perform request (set transctionID as header and throw error appropriately)
     request.post({
-        // url: `${BACKEND}/checkout`, My change
         url: `${BACKEND}/api/values`,
         json: order,
         headers: {
@@ -211,7 +210,7 @@ class App extends Component {
             <p className="cart-success">Bets placed. Thank you!</p>
           )}
           <button
-            onClick={this.checkout}
+            onClick={this.placebets}
             disabled={this.props.cart.length === 0}
           >
             Place bets

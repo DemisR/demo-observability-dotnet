@@ -34,5 +34,5 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: 
-        - app-springboot:8080 
+        - springbootservice:8080 
         # host.docker.internal resolve ip of host
