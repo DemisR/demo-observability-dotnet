@@ -101,3 +101,5 @@ dotnetservice:
 tracing:
 - wrong order of span displayed by grafana. Search if it's a Grafana bug or other.
 
+/!\ Currently Steeltoe use opentelemetry version:0.2.0-alpha .
+opentelemetry it's currently in 1.0.0.RC1 so, should be released soon an probably upgraded in Steeltoe too. 

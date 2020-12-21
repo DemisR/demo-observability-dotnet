@@ -1,0 +1,9 @@
+<html>
+    <script>
+        fetch('http://localhost:8080/api/bets').then(function(response) {
+            return response.text();
+        }).then(function(j) {            
+	        alert(j);
+        });
+    </script>
+</html>
