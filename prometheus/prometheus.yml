@@ -20,9 +20,19 @@ scrape_configs:
       - targets: ['localhost:9090']
 
 
-############ Springboot ############
+############ Dotnet ############
   - job_name: 'steeltoe-prometheus'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
     static_configs:
       - targets: ['dotnetservice:80']
+
+############ Springboot ############
+  - job_name: 'springboot'
+    metrics_path: /actuator/prometheus
+    scheme: http
+    scrape_interval: 5s
+    static_configs:
+      - targets: 
+        - app-springboot:8080 
+        # host.docker.internal resolve ip of host

@@ -58,8 +58,8 @@ namespace dotnetservice.Controllers
         {
             string json = System.Text.Json.JsonSerializer.Serialize(value);
 
-            // call an external service
-            string baseUrl = "https://httpbin.org/status/200";
+            // call an springboot service
+            string baseUrl = "http://springbootservice/api/bets";
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(baseUrl);
             HttpResponseMessage response = client.GetAsync(baseUrl).Result; 

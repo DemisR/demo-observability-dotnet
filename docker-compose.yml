@@ -72,6 +72,15 @@ services:
     environment:
      PORT: 3005
 
+  springbootservice:
+    build: ./springbootservice
+    restart: always
+    ports:
+      - "8080:8080"
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://localhost:3100/loki/api/v1/push"
 
 volumes:
   prometheus_data: {}

@@ -1,0 +1,44 @@
+
+info:
+  app:
+    name: springbootservice
+    description: Demo observability Spring Boot
+    version: 0.0.1
+
+spring:
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    base-url: http://zipkin:9411/
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    be.lampiris: DEBUG
+
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, info, health, env
+  info:
+    git:
+      mode: full
+      enabled: true
+  health:
+    diskspace:
+      enabled: true

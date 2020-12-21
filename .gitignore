@@ -1,15 +1,8 @@
 *.swp
 *.*~
 project.lock.json
-.DS_Store
 *.pyc
-dotnetservice/nupkg/
-
-# Visual Studio Code
-.vscode
-
-# Rider
-.idea
+nupkg/
 
 # User-specific files
 *.suo
@@ -18,28 +11,61 @@ dotnetservice/nupkg/
 *.sln.docstates
 
 # Build results
-dotnetservice/[Dd]ebug/
-dotnetservice/[Dd]ebugPublic/
-dotnetservice/[Rr]elease/
-dotnetservice/[Rr]eleases/
-dotnetservice/x64/
-dotnetservice/x86/
-dotnetservice/build/
-dotnetservice/bld/
-dotnetservice/[Bb]in/
-dotnetservice/[Oo]bj/
-dotnetservice/[Oo]ut/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
 msbuild.log
 msbuild.err
 msbuild.wrn
 
 
+### react 
+node_modules/*
+build/
+settings.json
+
+### Java
+
+# Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+pom.xml.bak
+
+# Package Files #
+*.jar
+*.war
+*.ear
 
 
-react/node_modules/*
-react/build/
+### IDEs
+*.iml
 .idea/
-.DS_Store
-react/settings.json
 .vscode/
 .env
+
+### OSX template
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# System Files
+.DS_Store
+Thumbs.db
