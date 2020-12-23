@@ -4,6 +4,17 @@ Demo of observability capabilities with different frameworks (React, .NET core, 
 
 ![Architecture](./architecture.jpg)
 
+## Prepare
+
+Create a React project on sentry (you on-premise or on sentry.io) and change **dsn** in
+file `react/public/index.html` by your dsn
+
+```
+    Sentry.init({
+      dsn: 'https://cfafaefzafazfzafza.ingest.sentry.io/5563890',
+```
+
+
 ## Run
 
 `docker-compose up -d --build`
@@ -61,7 +72,7 @@ docker plugin rm loki
 
 ---
 
-# Test
+# Test scenario
 
 Got to react front http://localhost:3005
 Cool! We can bet on our favorite footbal team.
@@ -100,10 +111,10 @@ You can also search ol logs based on trace id `{compose_project="demo-observabil
 
 dotnetservice:
 - add errors logs when receive stauts code 500
-- http metrics not exported when we enable tracing
+- **http metrics** not exported when we enable tracing
 
 tracing:
-- wrong order of span displayed by grafana. Search if it's a Grafana bug or other.
+- wrong order of span displayed by grafana. Search if it's a Grafana bug or opentelemety.
 
-/!\ Currently Steeltoe use opentelemetry version:0.2.0-alpha .
+⚠️ Currently Steeltoe use opentelemetry version:0.2.0-alpha .
 opentelemetry it's currently in 1.0.0.RC1 so, should be released soon an probably upgraded in Steeltoe too. 
